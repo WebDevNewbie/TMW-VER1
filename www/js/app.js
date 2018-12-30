@@ -1,7 +1,7 @@
 
 angular.module('tradeapp', ['ionic', 'tradeapp.controllers', 'tradeapp.services','ngCordova','ngSanitize'])
 
-.run(function($ionicPlatform, $rootScope, $cordovaToast, $http, $ionicPopup, $interval,Auth) {
+.run(function($ionicPlatform, $rootScope, $cordovaToast, $http, $ionicPopup, $interval,$timeout,Auth) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -27,6 +27,12 @@ angular.module('tradeapp', ['ionic', 'tradeapp.controllers', 'tradeapp.services'
       // error
     });
 
+  }
+
+  $rootScope.newMessage = function(){
+    $timeout(function(){
+      $scope.showSuccessMessage('Timeout function is called!');
+    },1000)
   }
  
 })
