@@ -579,7 +579,7 @@ angular.module('tradeapp.controllers', ['ngCordova','ngSanitize'])
 	})
 
 	$scope.ConnectWithTrader = function(traderid){
-		$rootScope.s_u_ID = traderid;
+		$rootScope.ConnectID = traderid;
 		window.location.href = "#/menu/connect-trader";
 	}
 	$scope.viewImages = function(){
@@ -1778,8 +1778,10 @@ angular.module('tradeapp.controllers', ['ngCordova','ngSanitize'])
 	function($scope, $timeout, $interval, $sce, $http, $cordovaCamera, $rootScope,  $ionicLoading,  $ionicPlatform, $ionicPopup, $ionicActionSheet, $interval, $timeout, Auth) {
 	
 	$scope.fetchMessageTouser = function(){
-		notify = $interval(function(){
+		notify = $timeout(function(){
+			console.log("Chatting with ConnectID:" + $rootScope.ConnectID);
       		$scope.chatMessagerealtime();
+      		//
       	//$scope.updateStatusmessage();
     	},1000);
     	//$scope.stopNotify();
@@ -1803,7 +1805,7 @@ angular.module('tradeapp.controllers', ['ngCordova','ngSanitize'])
 		obj.url    = $rootScope.baseURL + "/mobile/chat_controller/fetch_messages";
 		obj.data   = new FormData();
 		obj.data.append('fromTrader',$rootScope.user_info.user_id);
-		obj.data.append('toTrader',$rootScope.s_u_ID);
+		obj.data.append('toTrader',$rootScope.ConnectID);
 		obj.params = {};
 		   
 		Auth.REQUEST(obj).then(
@@ -1833,7 +1835,7 @@ angular.module('tradeapp.controllers', ['ngCordova','ngSanitize'])
 		obj.url    = $rootScope.baseURL + "/mobile/chat_controller/insert_chat";
 		obj.data   = new FormData();
 		obj.data.append('fromTrader',$rootScope.user_info.user_id);
-		obj.data.append('toTrader',$rootScope.s_u_ID);
+		obj.data.append('toTrader',$rootScope.ConnectID);
 		obj.data.append('chatMessage',$scope.trader.chat);
 		
 		obj.params = {};
@@ -1851,7 +1853,7 @@ angular.module('tradeapp.controllers', ['ngCordova','ngSanitize'])
 				$scope.chats.unshift(chatdata);
 				$rootScope.chatCount++;
 				$scope.trader.chat = "";
-				//$scope.fetchMessageTouser();
+				$scope.fetchMessageTouser();
 				//$scope.retreiveMessage();
 				
 				
@@ -1877,7 +1879,7 @@ angular.module('tradeapp.controllers', ['ngCordova','ngSanitize'])
 		obj.url    = $rootScope.baseURL + "/mobile/chat_controller/latest_chat_message";
 		obj.data   = new FormData();
 		obj.data.append('logged_id',$rootScope.user_info.user_id);
-		obj.data.append('sender_id',$rootScope.s_u_ID);
+		obj.data.append('sender_id',$rootScope.ConnectID);
 		obj.params = {};
 		   
 		Auth.REQUEST(obj).then(
@@ -1972,7 +1974,7 @@ angular.module('tradeapp.controllers', ['ngCordova','ngSanitize'])
 	})
 
 	$scope.viewChatHistory = function(traderID){
-		$rootScope.s_u_ID = traderID;
+		$rootScope.ConnectID = traderID;
 		window.location.href = "#/menu/connect-trader";
 	}
 
